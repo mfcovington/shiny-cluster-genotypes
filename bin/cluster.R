@@ -3,9 +3,10 @@ library(plyr)
 
 experiment.id <- 'SNP Data'
 input.file <- 'sample-data.snps.txt'
+delimiter <- '\t'
 
 na.strings <- c('N', 'U')
-genotypes <- read.table(file = input.file, sep = '\t', header = TRUE,
+genotypes <- read.table(file = input.file, sep = delimiter, header = TRUE,
                         row.names = 1, na.strings = na.strings)
 sample.ids <- colnames(genotypes)
 
