@@ -1,4 +1,7 @@
 library(cluster)
+library(ggplot2)
+library(ggrepel)
+library(limma)
 library(plyr)
 
 experiment.id <- 'SNP Data'
@@ -9,6 +12,17 @@ na.strings <- c('N', 'U')
 genotypes <- read.table(file = input.file, sep = delimiter, header = TRUE,
                         row.names = 1, na.strings = na.strings)
 sample.ids <- colnames(genotypes)
+
+mds <- plotMDS(data.matrix(genotypes))
+mds.df <- as.data.frame(mds$cmdscale.out)
+mds.df$idx <- 1:length(sample.ids)
+
+ggplot(mds.df) +
+  geom_point(aes(x = V1, y = V2)) +
+  geom_label_repel(aes(x = V1, y = V2, label = idx)) +
+  ggtitle(expression('Leading ' * Log[2] * ' fold change MDS')) +
+  xlab('Dimension 1') +
+  ylab('Dimension 2')
 
 genotypes <- as.data.frame(t(genotypes))
 genotypes <- colwise(as.factor)(genotypes)
