@@ -78,3 +78,11 @@ ggplot(bin.genotypes.m) +
   labs(fill = 'Genotype') +
   scale_fill_manual(values = allele.colors) +
   theme(axis.text.x = element_text(angle = 90))
+
+
+################################
+# SAVE DATA SORTED BY GENOTYPE #
+################################
+
+write.table(genotypes.sorted[, 1:ncol(genotypes.sorted) - 1],
+            file = 'genotypes-sorted.txt', sep = delimiter, quote = FALSE)
