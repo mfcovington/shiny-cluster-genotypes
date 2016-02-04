@@ -5,14 +5,30 @@ library(limma)
 library(plyr)
 library(reshape)
 
+
+##############################
+# SET PARAMETERS AND OPTIONS #
+##############################
+
 experiment.id <- 'SNP Data'
 input.file <- 'sample-data.snps.txt'
 delimiter <- '\t'
-
 na.strings <- c('N', 'U')
+allele.colors <- c('skyblue', 'orange', 'black', 'green', 'yellow', 'plum')
+
+
+############
+# GET DATA #
+############
+
 genotypes <- read.table(file = input.file, sep = delimiter, header = TRUE,
                         row.names = 1, na.strings = na.strings)
 sample.ids <- colnames(genotypes)
+
+
+############
+# MDS PLOT #
+############
 
 mds <- plotMDS(data.matrix(genotypes))
 mds.df <- as.data.frame(mds$cmdscale.out)
@@ -25,6 +41,11 @@ ggplot(mds.df) +
   xlab('Dimension 1') +
   ylab('Dimension 2')
 
+
+#############
+# TREE PLOT #
+#############
+
 genotypes.transposed <- as.data.frame(t(genotypes))
 genotypes.transposed <- colwise(as.factor)(genotypes.transposed)
 
@@ -36,6 +57,11 @@ plot.title <- paste('Samples Clustered by Markers', experiment.id, sep = '\n')
 plot(tree, labels = sample.ids, main = plot.title, sub = '',
      xlab = 'Distances (complete method)')
 
+
+#############
+# TILE PLOT #
+#############
+
 clustered.sample.order <- tree$order
 genotypes.sorted <- genotypes[, clustered.sample.order]
 genotypes.sorted$marker.id <- rownames(genotypes.sorted)
@@ -43,8 +69,6 @@ genotypes.sorted$marker.id <- rownames(genotypes.sorted)
 bin.genotypes.m <- melt(genotypes.sorted, id = c('marker.id'),
                         variable_name = 'sample')
 bin.genotypes.m$value <- as.factor(bin.genotypes.m$value)
-
-allele.colors <- c('skyblue', 'orange', 'black', 'green', 'yellow', 'plum')
 
 ggplot(bin.genotypes.m) +
   geom_raster(aes(x = marker.id, y = sample, fill = value)) +
