@@ -2,6 +2,14 @@ library(shiny)
 
 shinyServer(function(input, output) {
 
+  statusReport <- function(status.msg, app.out = TRUE, console.out = TRUE) {
+    if (console.out)
+      cat(status.msg)
+
+    if (app.out)
+      output$status <- renderText(status.msg)
+  }
+
   getData <- eventReactive(input$run, {
     input.file <- input$input.file
 
@@ -12,10 +20,9 @@ shinyServer(function(input, output) {
       df <- read.table(file = input.file$datapath, sep = input$delimiter,
                        header = TRUE, row.names = 1, na.strings = na.strings)
 
-      status.msg <- sprintf("Reading file '%s' (%i rows x %i columns).\n",
-                            input.file$name, nrow(df), ncol(df))
-      output$status <- renderText(status.msg)
-      cat(status.msg)
+      statusReport(
+        sprintf("Reading file '%s' (%i rows x %i columns).\n",
+                input.file$name, nrow(df), ncol(df)))
 
       df
     }
