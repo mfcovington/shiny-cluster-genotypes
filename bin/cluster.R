@@ -85,4 +85,5 @@ ggplot(bin.genotypes.m) +
 ################################
 
 write.table(genotypes.sorted[, 1:ncol(genotypes.sorted) - 1],
-            file = 'genotypes-sorted.txt', sep = delimiter, quote = FALSE)
+            file = 'genotypes-sorted.txt', sep = delimiter, quote = FALSE,
+            col.names = NA)
