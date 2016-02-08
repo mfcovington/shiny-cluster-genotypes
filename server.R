@@ -21,7 +21,7 @@ shinyServer(function(input, output) {
                        header = TRUE, row.names = 1, na.strings = na.strings)
 
       statusReport(
-        sprintf("Reading file '%s' (%i rows x %i columns).\n",
+        sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
                 input.file$name, nrow(df), ncol(df)))
 
       df
