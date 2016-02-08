@@ -28,9 +28,7 @@ shinyServer(function(input, output) {
     }
   })
 
-  output$genotypes <- renderTable({
-    df <- getData()
-    df[1:min(c(5, nrow(df))), 1:min(c(5, ncol(df)))]
-  })
+  output$genotypes <- renderDataTable({getData()},
+                                      options = list(pageLength = 10))
 
 })
