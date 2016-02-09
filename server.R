@@ -38,7 +38,8 @@ shinyServer(function(input, output) {
   }, options = list(pageLength = 10))
 
   output$mds.plot <- renderPlot({
-    plotGenotypeMDS(getData(), sampleIds())
+    plotGenotypeMDS(getData(), sampleIds(),
+                    verbose.labels = input$verbose.labels)
   })
 
   makeTree <- reactive({makeGenotypeTree(getData())})

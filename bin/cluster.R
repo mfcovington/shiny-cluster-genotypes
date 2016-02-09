@@ -54,17 +54,22 @@ getSampleIds <- function(genotypes) {
 # MDS PLOT #
 ############
 
-plotGenotypeMDS <- function(genotypes, sample.ids) {
+plotGenotypeMDS <- function(genotypes, sample.ids, verbose.labels = TRUE) {
   mds <- plotMDS(data.matrix(genotypes))
   mds.df <- as.data.frame(mds$cmdscale.out)
   mds.df$idx <- 1:length(sample.ids)
 
   p <- ggplot(mds.df) +
     geom_point(aes(x = V1, y = V2)) +
-    geom_label_repel(aes(x = V1, y = V2, label = idx)) +
     ggtitle(expression('Leading ' * Log[2] * ' fold change MDS')) +
     xlab('Dimension 1') +
     ylab('Dimension 2')
+
+  if (verbose.labels) {
+    p <- p + geom_label_repel(aes(x = V1, y = V2, label = sample.ids))
+  } else {
+    p <- p + geom_label_repel(aes(x = V1, y = V2, label = idx))
+  }
 
   print(p)
 }

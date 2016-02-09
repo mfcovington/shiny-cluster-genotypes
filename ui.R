@@ -32,7 +32,10 @@ shinyUI(fluidPage(
 
       tags$hr(),
 
-      textInput('allele.colors', 'Color Palette (must have at least as many colors as the maximum number of alleles for a marker; separate with commas):',
+      radioButtons('verbose.labels', 'Labels on MDS Plot:',
+                   c('Sample IDs' = TRUE, 'Sample Index Numbers' = FALSE)),
+
+      textInput('allele.colors', 'Color Palette for Tile Plot (must have at least as many colors as the maximum number of alleles for a marker; separate with commas):',
                 'skyblue,orange,black,green,yellow,plum'),
 
       actionButton('run', 'Run Analysis')
