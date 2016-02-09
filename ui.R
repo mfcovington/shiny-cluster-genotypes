@@ -24,7 +24,8 @@ shinyUI(fluidPage(
 
       selectInput('delimiter', 'File Type:',
                   list('Tab-delimited' = '\t',
-                       'Comma-separated values' = ',')),
+                       'Comma-separated values' = ',',
+                       'Space-delimited' = '')),
 
       textInput('na.strings',
                 'Strings that represent missing values in the data set (if >1, separate with commas):',
