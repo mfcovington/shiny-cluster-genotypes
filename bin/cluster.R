@@ -97,8 +97,7 @@ plotGenotypeTree <- function(tree, sample.ids, experiment.id) {
 sortGenotypesByTree <- function(genotypes, tree) {
   clustered.sample.order <- tree$order
   genotypes.sorted <- genotypes[, clustered.sample.order]
-  genotypes.sorted$marker.id <- rownames(genotypes.sorted)
-  genotypes.sorted
+  cbind(marker.id = rownames(genotypes.sorted), genotypes.sorted)
 }
 
 plotGenotypeTile <- function(genotypes.sorted, allele.colors) {
@@ -124,7 +123,7 @@ plotGenotypeTile <- function(genotypes.sorted, allele.colors) {
 ################################
 
 writeSortedGenotypes <- function(genotypes.sorted, delimiter) {
-  write.table(genotypes.sorted[, 1:ncol(genotypes.sorted) - 1],
+  write.table(genotypes.sorted[, 2:ncol(genotypes.sorted)],
               file = 'genotypes-sorted.txt', sep = delimiter, quote = FALSE,
               col.names = NA)
 }

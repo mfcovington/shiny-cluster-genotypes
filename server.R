@@ -33,7 +33,8 @@ shinyServer(function(input, output) {
   })
 
   output$genotypes <- renderDataTable({
-    getData()
+    genotypes <- getData()
+    cbind(marker.ids = rownames(genotypes), genotypes)
   }, options = list(pageLength = 10))
 
   output$mds.plot <- renderPlot({
