@@ -1,3 +1,4 @@
+source('bin/cluster.R')
 library(shiny)
 
 shinyServer(function(input, output) {
@@ -17,8 +18,7 @@ shinyServer(function(input, output) {
       NULL
     } else {
       na.strings = unlist(strsplit(input$na.strings, ','))
-      df <- read.table(file = input.file$datapath, sep = input$delimiter,
-                       header = TRUE, row.names = 1, na.strings = na.strings)
+      df <- getDataFromFile(input.file$datapath, input$delimiter, na.strings)
 
       statusReport(
         sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
