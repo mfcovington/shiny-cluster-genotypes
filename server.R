@@ -40,8 +40,15 @@ shinyServer(function(input, output) {
     plotGenotypeMDS(getData(), sampleIds())
   })
 
+  makeTree <- reactive({makeGenotypeTree(getData())})
+
   output$tree.plot <- renderPlot({
-    tree <- makeGenotypeTree(getData())
-    plotGenotypeTree(tree, sampleIds(), input$experiment.id)
+    plotGenotypeTree(makeTree(), sampleIds(), input$experiment.id)
+  })
+
+  output$tile.plot <- renderPlot({
+    genotypes.sorted <- sortGenotypesByTree(getData(), makeTree())
+    allele.colors = unlist(strsplit(input$allele.colors, ','))
+    plotGenotypeTile(genotypes.sorted, allele.colors)
   })
 })
