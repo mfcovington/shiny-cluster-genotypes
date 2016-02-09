@@ -1,6 +1,7 @@
 library(shiny)
 
 shinyUI(fluidPage(
+  theme = 'app.css',
 
   titlePanel('Clustering Genotype Data'),
 

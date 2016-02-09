@@ -1,0 +1,3 @@
+#genotypes .col-sm-12, #genotypes_sorted .col-sm-12 {
+  overflow-x: scroll;
+}
