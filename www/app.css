@@ -1,3 +1,19 @@
-#genotypes .col-sm-12, #genotypes_sorted .col-sm-12 {
+#genotypes .col-sm-12,
+#genotypes_sorted .col-sm-12 {
   overflow-x: scroll;
+}
+
+/* Override OS X's hidden scrollbars */
+
+#genotypes .col-sm-12::-webkit-scrollbar,
+#genotypes_sorted .col-sm-12::-webkit-scrollbar {
+  -webkit-appearance: none;
+  height: 5px;
+}
+
+#genotypes .col-sm-12::-webkit-scrollbar-thumb,
+#genotypes_sorted .col-sm-12::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, 0.5);
 }
