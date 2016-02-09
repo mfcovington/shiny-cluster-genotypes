@@ -28,7 +28,15 @@ shinyServer(function(input, output) {
     }
   })
 
-  output$genotypes <- renderDataTable({getData()},
-                                      options = list(pageLength = 10))
+  sampleIds <- reactive({
+    getSampleIds(getData())
+  })
 
+  output$genotypes <- renderDataTable({
+    getData()
+  }, options = list(pageLength = 10))
+
+  output$mds.plot <- renderPlot({
+    plotGenotypeMDS(getData(), sampleIds())
+  })
 })

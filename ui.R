@@ -38,6 +38,7 @@ shinyUI(pageWithSidebar(
 
   mainPanel(
     p(textOutput('status')),
+    plotOutput('mds.plot'),
     dataTableOutput('genotypes')
   )
 ))
