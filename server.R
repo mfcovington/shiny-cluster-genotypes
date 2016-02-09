@@ -39,4 +39,9 @@ shinyServer(function(input, output) {
   output$mds.plot <- renderPlot({
     plotGenotypeMDS(getData(), sampleIds())
   })
+
+  output$tree.plot <- renderPlot({
+    tree <- makeGenotypeTree(getData())
+    plotGenotypeTree(tree, sampleIds(), input$experiment.id)
+  })
 })
