@@ -51,4 +51,8 @@ shinyServer(function(input, output) {
     allele.colors = unlist(strsplit(input$allele.colors, ','))
     plotGenotypeTile(genotypes.sorted, allele.colors)
   })
+
+  output$genotypes_sorted <- renderDataTable({
+    sortGenotypesByTree(getData(), makeTree())
+  }, options = list(pageLength = 10))
 })
