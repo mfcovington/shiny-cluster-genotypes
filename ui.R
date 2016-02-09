@@ -37,10 +37,13 @@ shinyUI(pageWithSidebar(
   ),
 
   mainPanel(
-    p(textOutput('status')),
-    dataTableOutput('genotypes'),
-    plotOutput('mds.plot'),
-    plotOutput('tree.plot'),
-    plotOutput('tile.plot')
+    tabsetPanel(
+      tabPanel('Input Data',
+        p(textOutput('status')),
+        dataTableOutput('genotypes')),
+      tabPanel('MDS Plot', plotOutput('mds.plot')),
+      tabPanel('Tree Plot', plotOutput('tree.plot')),
+      tabPanel('Tile Plot', plotOutput('tile.plot'))
+    )
   )
 ))
