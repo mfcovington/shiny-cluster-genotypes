@@ -27,7 +27,7 @@ processSampleData <- function() {
   plotGenotypeMDS(genotypes, sample.ids)
 
   tree <- makeGenotypeTree(genotypes)
-  plotGenotypeTree(tree, sample.ids, experiment.id, plot.title)
+  plotGenotypeTree(tree, sample.ids, experiment.id)
 
   genotypes.sorted <- sortGenotypesByTree(genotypes, tree)
   plotGenotypeTile(genotypes.sorted, allele.colors)
@@ -83,7 +83,7 @@ makeGenotypeTree <- function(genotypes) {
   tree <- hclust(distances, method = 'complete')
 }
 
-plotGenotypeTree <- function(tree, sample.ids, experiment.id, plot.title) {
+plotGenotypeTree <- function(tree, sample.ids, experiment.id) {
   plot.title <- paste('Samples Clustered by Markers', experiment.id, sep = '\n')
   plot(tree, labels = sample.ids, main = plot.title, sub = '',
        xlab = 'Distances (complete method)')
