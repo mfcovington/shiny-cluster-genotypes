@@ -1,49 +1,51 @@
 library(shiny)
 
-shinyUI(pageWithSidebar(
+shinyUI(fluidPage(
 
-  headerPanel('Clustering Genotype Data'),
+  titlePanel('Clustering Genotype Data'),
 
-  sidebarPanel(
+  sidebarLayout(
+    sidebarPanel(
 
-    textInput('experiment.id', 'Experiment ID:', ''),
+      textInput('experiment.id', 'Experiment ID:', ''),
 
-    tags$hr(),
+      tags$hr(),
 
-    fileInput('input.file', 'Input Data File:',
-              accept = c(
-                'text/csv',
-                'text/comma-separated-values',
-                'text/tab-separated-values',
-                'text/plain',
-                '.csv',
-                '.tsv')),
+      fileInput('input.file', 'Input Data File:',
+                accept = c(
+                  'text/csv',
+                  'text/comma-separated-values',
+                  'text/tab-separated-values',
+                  'text/plain',
+                  '.csv',
+                  '.tsv')),
 
 
-    selectInput('delimiter', 'File Type:',
-                list('Tab-delimited' = '\t',
-                     'Comma-separated values' = ',')),
+      selectInput('delimiter', 'File Type:',
+                  list('Tab-delimited' = '\t',
+                       'Comma-separated values' = ',')),
 
-    textInput('na.strings',
-              'Strings that represent missing values in the data set (if >1, separate with commas):',
-              ''),
+      textInput('na.strings',
+                'Strings that represent missing values in the data set (if >1, separate with commas):',
+                ''),
 
-    tags$hr(),
+      tags$hr(),
 
-    textInput('allele.colors', 'Color Palette (must have at least as many colors as the maximum number of alleles for a marker; separate with commas):',
-              'skyblue,orange,black,green,yellow,plum'),
+      textInput('allele.colors', 'Color Palette (must have at least as many colors as the maximum number of alleles for a marker; separate with commas):',
+                'skyblue,orange,black,green,yellow,plum'),
 
-    actionButton('run', 'Run Analysis')
-  ),
+      actionButton('run', 'Run Analysis')
+    ),
 
-  mainPanel(
-    tabsetPanel(
-      tabPanel('Input Data',
-        p(textOutput('status')),
-        dataTableOutput('genotypes')),
-      tabPanel('MDS Plot', plotOutput('mds.plot')),
-      tabPanel('Tree Plot', plotOutput('tree.plot')),
-      tabPanel('Tile Plot', plotOutput('tile.plot'))
+    mainPanel(
+      tabsetPanel(
+        tabPanel('Input Data',
+          p(textOutput('status')),
+          dataTableOutput('genotypes')),
+        tabPanel('MDS Plot', plotOutput('mds.plot')),
+        tabPanel('Tree Plot', plotOutput('tree.plot')),
+        tabPanel('Tile Plot', plotOutput('tile.plot'))
+      )
     )
   )
 ))
