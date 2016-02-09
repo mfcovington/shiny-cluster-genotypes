@@ -104,6 +104,8 @@ plotGenotypeTile <- function(genotypes.sorted, allele.colors) {
   bin.genotypes.m <- melt(genotypes.sorted, id = c('marker.id'),
                           variable_name = 'sample')
   bin.genotypes.m$value <- as.factor(bin.genotypes.m$value)
+  bin.genotypes.m$marker.id <- factor(bin.genotypes.m$marker.id,
+                                      levels = rownames(genotypes.sorted))
 
   p <- ggplot(bin.genotypes.m) +
     geom_raster(aes(x = marker.id, y = sample, fill = value)) +
