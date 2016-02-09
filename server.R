@@ -62,9 +62,22 @@ shinyServer(function(input, output) {
     })
   })
 
-  output$genotypes_sorted <- renderDataTable({
+  sortData <- reactive({
     withProgress(message = 'Sorting Genotype Data', {
       sortGenotypesByTree(getData(), makeTree())
     })
-  }, options = list(pageLength = 10))
+  })
+
+  output$genotypes_sorted <- renderDataTable({sortData()},
+                                              options = list(pageLength = 10))
+
+  output$downloadSortedData <- downloadHandler(
+    filename = function() {
+      sub('(.+)\\.([^.]+)$', '\\1.sorted.\\2', input$input.file$name)
+    },
+    content = function(file) {
+      writeSortedGenotypes(sortData(), input$delimiter, file)
+    }
+  )
+
 })

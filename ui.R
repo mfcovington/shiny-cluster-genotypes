@@ -48,6 +48,8 @@ shinyUI(fluidPage(
           dataTableOutput('genotypes')),
         tabPanel('Sorted Data',
           p(),
+          downloadButton('downloadSortedData', 'Download Sorted Data'),
+          p(),
           dataTableOutput('genotypes_sorted')),
         tabPanel('MDS Plot', plotOutput('mds.plot')),
         tabPanel('Tree Plot', plotOutput('tree.plot')),

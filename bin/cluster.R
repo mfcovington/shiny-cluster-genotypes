@@ -129,8 +129,9 @@ plotGenotypeTile <- function(genotypes.sorted, allele.colors) {
 # SAVE DATA SORTED BY GENOTYPE #
 ################################
 
-writeSortedGenotypes <- function(genotypes.sorted, delimiter) {
+writeSortedGenotypes <- function(genotypes.sorted, delimiter,
+                                 file = 'genotypes-sorted.txt') {
   write.table(genotypes.sorted[, 2:ncol(genotypes.sorted)],
-              file = 'genotypes-sorted.txt', sep = delimiter, quote = FALSE,
+              file = file, sep = delimiter, quote = FALSE,
               col.names = NA)
 }
