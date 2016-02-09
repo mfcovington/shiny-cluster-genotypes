@@ -12,20 +12,22 @@ shinyServer(function(input, output) {
   }
 
   getData <- eventReactive(input$run, {
-    input.file <- input$input.file
+    withProgress(message = 'Getting Data', {
+      input.file <- input$input.file
 
-    if (is.null(input.file)) {
-      NULL
-    } else {
-      na.strings = unlist(strsplit(input$na.strings, ','))
-      df <- getDataFromFile(input.file$datapath, input$delimiter, na.strings)
+      if (is.null(input.file)) {
+        NULL
+      } else {
+        na.strings = unlist(strsplit(input$na.strings, ','))
+        df <- getDataFromFile(input.file$datapath, input$delimiter, na.strings)
 
-      statusReport(
-        sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
-                input.file$name, nrow(df), ncol(df)))
+        statusReport(
+          sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
+                  input.file$name, nrow(df), ncol(df)))
 
-      df
-    }
+        df
+      }
+    })
   })
 
   sampleIds <- reactive({
@@ -38,23 +40,31 @@ shinyServer(function(input, output) {
   }, options = list(pageLength = 10))
 
   output$mds.plot <- renderPlot({
-    plotGenotypeMDS(getData(), sampleIds(),
-                    verbose.labels = input$verbose.labels)
+    withProgress(message = 'Building MDS Plot', {
+      plotGenotypeMDS(getData(), sampleIds(),
+                      verbose.labels = input$verbose.labels)
+    })
   })
 
   makeTree <- reactive({makeGenotypeTree(getData())})
 
   output$tree.plot <- renderPlot({
-    plotGenotypeTree(makeTree(), sampleIds(), input$experiment.id)
+    withProgress(message = 'Building Tree Plot', {
+      plotGenotypeTree(makeTree(), sampleIds(), input$experiment.id)
+    })
   })
 
   output$tile.plot <- renderPlot({
-    genotypes.sorted <- sortGenotypesByTree(getData(), makeTree())
-    allele.colors = unlist(strsplit(input$allele.colors, ','))
-    plotGenotypeTile(genotypes.sorted, allele.colors)
+    withProgress(message = 'Building Tile Plot', {
+      genotypes.sorted <- sortGenotypesByTree(getData(), makeTree())
+      allele.colors = unlist(strsplit(input$allele.colors, ','))
+      plotGenotypeTile(genotypes.sorted, allele.colors)
+    })
   })
 
   output$genotypes_sorted <- renderDataTable({
-    sortGenotypesByTree(getData(), makeTree())
+    withProgress(message = 'Sorting Genotype Data', {
+      sortGenotypesByTree(getData(), makeTree())
+    })
   }, options = list(pageLength = 10))
 })
