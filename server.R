@@ -18,12 +18,12 @@ shinyServer(function(input, output) {
       if (is.null(input.file)) {
         NULL
       } else {
-        na.strings = unlist(strsplit(input$na.strings, ','))
+        na.strings <- unlist(strsplit(input$na.strings, ','))
         delimiter <- ifelse(input$delimiter == 'SPACE', '', input$delimiter)
         df <- getDataFromFile(input.file$datapath, delimiter, na.strings)
 
         statusReport(
-          sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
+          sprintf("Imported file '%s': %i markers (rows) x %i samples (columns).\n",
                   input.file$name, nrow(df), ncol(df)))
 
         df
