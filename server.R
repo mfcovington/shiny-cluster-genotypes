@@ -19,7 +19,8 @@ shinyServer(function(input, output) {
         NULL
       } else {
         na.strings = unlist(strsplit(input$na.strings, ','))
-        df <- getDataFromFile(input.file$datapath, input$delimiter, na.strings)
+        delimiter <- ifelse(input$delimiter == 'SPACE', '', input$delimiter)
+        df <- getDataFromFile(input.file$datapath, delimiter, na.strings)
 
         statusReport(
           sprintf("Reading file '%s': %i markers (rows) x %i samples (columns).\n",
@@ -76,7 +77,8 @@ shinyServer(function(input, output) {
       sub('(.+)\\.([^.]+)$', '\\1.sorted.\\2', input$input.file$name)
     },
     content = function(file) {
-      writeSortedGenotypes(sortData(), input$delimiter, file)
+      delimiter <- ifelse(input$delimiter == 'SPACE', '', input$delimiter)
+      writeSortedGenotypes(sortData(), delimiter, file)
     }
   )
 
